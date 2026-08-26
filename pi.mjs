@@ -5,6 +5,13 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import path from "node:path";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
+const localPiBin = path.join(
+  root,
+  "node_modules",
+  ".bin",
+  process.platform === "win32" ? "pi.cmd" : "pi",
+);
+const piBin = process.env.PI_BIN || (existsSync(localPiBin) ? localPiBin : "pi");
 const envPath = path.join(root, ".env");
 if (existsSync(envPath)) {
   if (typeof process.loadEnvFile !== "function") {
@@ -151,7 +158,7 @@ const childEnv = {
 };
 
 console.log(`Workspace: ${workspacePath}`);
-const result = spawnSync(process.env.PI_BIN || "pi", args, {
+const result = spawnSync(piBin, args, {
   cwd: workspacePath,
   env: childEnv,
   shell: process.platform === "win32",

@@ -17,7 +17,6 @@ limits unnecessary context, and favors small, verifiable changes.
 ## Requirements
 
 - Node.js with `process.loadEnvFile` support (Node.js 20.12 or newer).
-- Pi coding agent `0.81.1`.
 - An OpenAI-compatible API endpoint, model name, and API key.
 
 ## Setup
@@ -25,9 +24,9 @@ limits unnecessary context, and favors small, verifiable changes.
 ```sh
 git clone https://github.com/en-twine/minimal-coding-harness.git
 cd minimal-coding-harness
+npm ci --ignore-scripts
 cp harness.config.example.mjs harness.config.mjs
 cp .env.example .env
-npm install -g --ignore-scripts @earendil-works/pi-coding-agent@0.81.1
 ```
 
 Put the key in the ignored `.env`:
@@ -40,7 +39,7 @@ Set `baseUrl`, `model`, and `workspacePath` in the ignored
 `harness.config.mjs`, then run:
 
 ```sh
-node pi.mjs
+npm start
 ```
 
 Windows PowerShell:
@@ -48,9 +47,13 @@ Windows PowerShell:
 ```powershell
 Copy-Item .\harness.config.example.mjs .\harness.config.mjs
 Copy-Item .\.env.example .\.env
-npm install -g --ignore-scripts @earendil-works/pi-coding-agent@0.81.1
-node .\pi.mjs
+npm ci --ignore-scripts
+npm start
 ```
+
+Pi `0.81.1` is pinned as a local dependency. No global Pi installation is needed.
+The committed lockfile also pins the tested transitive dependency versions. Set
+`PI_BIN` only when you deliberately want to use another Pi executable.
 
 `apiKeyEnv` is the environment-variable name, never the secret itself. A value
 explicitly exported in the terminal takes precedence over `.env`.
@@ -119,6 +122,26 @@ Browser control is off by default. It requires
 [browser-harness](https://github.com/browser-use/browser-harness) on `PATH`. Delegation
 is also off by default and permits only one bounded scout, worker, or reviewer per task.
 
+## Optional orchestration
+
+Orchestration is disabled by default because a subagent creates a separate model context
+and additional API requests. Enable it in the ignored `harness.config.mjs`:
+
+```js
+orchestration: true,
+orchestrationMaxRequests: 3,
+```
+
+This exposes one bounded `delegate` call per user task:
+
+- `scout`: inspect and report concise findings without changing files.
+- `worker`: implement one isolated task and run its narrowest check.
+- `reviewer`: independently review against acceptance criteria without changing files.
+
+Ask explicitly, for example: “Build this change, then use one reviewer against these
+acceptance criteria.” Keep orchestration off for straightforward tasks where an extra
+context would add cost without improving confidence.
+
 Temporary environment overrides:
 
 - `PI_WORKSPACE`
@@ -159,6 +182,14 @@ no longer useful.
 Created by [Dennis Verstappen](https://www.linkedin.com/in/dennis-verstappen-57aa10101/)
 at [en:twine](https://www.en-twine.ai/). If you need help setting up or adapting the
 harness, feel free to reach out to Dennis on LinkedIn.
+
+## Credits
+
+This is an independent configuration and extension layer built on
+[Pi Agent Harness](https://github.com/earendil-works/pi), created by Mario Zechner and
+maintained by Earendil Works. Pi is installed as a pinned dependency and remains under
+its own MIT License. See [third-party notices](THIRD_PARTY_NOTICES.md) for Pi, GreenPT
+Honey Lean, and the optional Browser Harness integration.
 
 ## License
 
