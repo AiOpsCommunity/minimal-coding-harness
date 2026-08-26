@@ -154,6 +154,12 @@ The file is never loaded automatically or shared.
 After saving a handoff, use `/new` and then `/pickup`. Delete the local handoff when it is
 no longer useful.
 
+## Maker and support
+
+Created by [Dennis Verstappen](https://www.linkedin.com/in/dennis-verstappen-57aa10101/)
+at [en:twine](https://www.en-twine.ai/). If you need help setting up or adapting the
+harness, feel free to reach out to Dennis on LinkedIn.
+
 ## License
 
 The harness is available under the MIT License. The vendored Honey Lean skill retains
