@@ -1,0 +1,14 @@
+{
+  "name": "minimal-coding-harness",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A small, token-efficient local coding harness built on Pi",
+  "type": "module",
+  "scripts": {
+    "start": "node pi.mjs",
+    "check": "node --check pi.mjs && node --check harness.config.example.mjs"
+  },
+  "dependencies": {
+    "@earendil-works/pi-coding-agent": "0.81.1"
+  }
+}
