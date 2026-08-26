@@ -1,5 +1,6 @@
 export default {
   // OpenAI-compatible API. Keep the secret itself out of this file.
+  // Recommended tested profile: https://api.greenpt.ai/v1 + glm-5.2-honey.
   baseUrl: "https://api.example.com/v1",
   model: "replace-with-model",
   apiKeyEnv: "MINIMAL_API_KEY",

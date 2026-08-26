@@ -55,6 +55,32 @@ node .\pi.mjs
 `apiKeyEnv` is the environment-variable name, never the secret itself. A value
 explicitly exported in the terminal takes precedence over `.env`.
 
+## Recommended GreenPT profile
+
+This harness was tuned and tested with [GreenPT's OpenAI-compatible endpoint](https://docs.greenpt.ai/get-started)
+and `glm-5.2-honey`. It keeps GLM 5.2's coding performance while applying
+[GreenPT's Honey output-compression rules](https://docs.greenpt.ai/compression-models)
+at the model endpoint.
+
+1. [Create a GreenPT account and choose an API plan](https://account.greenpt.ai/onboarding/plans).
+2. [Generate an API key in the dashboard](https://account.greenpt.ai/api/keys).
+3. Save the key only in the ignored `.env` as `MINIMAL_API_KEY=...`.
+4. Use these values in the ignored `harness.config.mjs`:
+
+```js
+baseUrl: "https://api.greenpt.ai/v1",
+model: "glm-5.2-honey",
+apiKeyEnv: "MINIMAL_API_KEY",
+compression: "model",
+```
+
+Keep `compression: "model"` for this profile: `glm-5.2-honey` already carries
+Honey's model-side rules, so loading the local Honey skill as well would duplicate
+instructions. If that variant is unavailable in a supplied model catalog, use
+`model: "glm-5.2"` with `compression: "skill"` as the portable fallback. You can
+check the models available to your key with GreenPT's documented `GET /v1/models`
+endpoint.
+
 ## Build in another repository
 
 Keep the harness separate from the application. Point `workspacePath` at the target:
