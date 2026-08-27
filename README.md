@@ -22,7 +22,7 @@ limits unnecessary context, and favors small, verifiable changes.
 ## Setup
 
 ```sh
-git clone https://github.com/en-twine/minimal-coding-harness.git
+git clone https://github.com/AiOpsCommunity/minimal-coding-harness.git
 cd minimal-coding-harness
 npm ci --ignore-scripts
 cp harness.config.example.mjs harness.config.mjs
@@ -177,11 +177,16 @@ The file is never loaded automatically or shared.
 After saving a handoff, use `/new` and then `/pickup`. Delete the local handoff when it is
 no longer useful.
 
-## Maker and support
+## Community and development
 
-Created by [Dennis Verstappen](https://www.linkedin.com/in/dennis-verstappen-57aa10101/)
-at [en:twine](https://www.en-twine.ai/). If you need help setting up or adapting the
-harness, feel free to reach out to Dennis on LinkedIn.
+Minimal Coding Harness is an open-source collaboration between
+[AiOps Community](https://github.com/AiOpsCommunity) and
+[en:twine](https://www.en-twine.ai/).
+
+The project is hosted by AiOps Community and developed by
+[Dennis Verstappen](https://www.linkedin.com/in/dennis-verstappen-57aa10101/)
+from en:twine. If you need help setting up or adapting the harness, feel free to reach
+out to Dennis on LinkedIn.
 
 ## Credits
 
